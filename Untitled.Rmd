@@ -4,18 +4,32 @@ output: html_document
 author: "Dong. Xinyu"
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+First I read test and train data into environment.
+I choose numeric variables from all variables.
+Then I extract all the datas in these variabls from test and train datas.
+Then I use random forest model in this question.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r}
-summary(cars)
+```{r,cache=TRUE}
+library(caret)
+library(lattice)
+library(ggplot2)
+pmltesting<-read.csv("pml-testing.csv",stringsAsFactors=FALSE)
+pmltraining<-read.csv("pml-training.csv",stringsAsFactors=FALSE)
+filtering1<-c()
+j=1;
+for(i in 1:160){
+        if(is.numeric(pmltesting[,i])){
+        filtering1[j]<-i
+        j=j+1
+        }
+}
+
+filteringTrain<-pmltraining[,filtering1]
+filteringTest<-pmltesting[,filtering1]
+
+modelFit<-train(as.factor(pmltraining$classe)~.,method="rf",data=filteringTrain,preProcess="pca")
+predict(modelFit,filteringTest)
 ```
 
-You can also embed plots, for example:
 
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
