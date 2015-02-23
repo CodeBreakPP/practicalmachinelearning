@@ -10,6 +10,27 @@ Then I extract all the datas in these variabls from test and train datas.
 Then I use random forest model in this question.
 
 
+```{r,cache=TRUE}
 
+library(lattice)
+library(ggplot2)
+library(caret)
+pmltesting<-read.csv("pml-testing.csv",stringsAsFactors=FALSE)
+pmltraining<-read.csv("pml-training.csv",stringsAsFactors=FALSE)
+filtering1<-c()
+j=1;
+for(i in 1:160){
+        if(is.numeric(pmltesting[,i])){
+        filtering1[j]<-i
+        j=j+1
+        }
+}
+
+filteringTrain<-pmltraining[,filtering1]
+filteringTest<-pmltesting[,filtering1]
+
+modelFit<-train(as.factor(pmltraining$classe)~.,method="rf",data=filteringTrain,preProcess="pca")
+predict(modelFit,filteringTest)
+```
 
 
