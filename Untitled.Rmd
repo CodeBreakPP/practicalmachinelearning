@@ -47,6 +47,12 @@ Then I use random forest model in this question.
 
 modelFit<-train(as.factor(pmltraining$classe)~.,method="rf",data=filteringTrain,preProcess="pca")
 ```
+
+Error Rate
+===============
+This section discusses about the error rates of the chosen random forest model . It is expected that the out-of-sample error rate should be larger than the in-sample error rate.
+
+
 Final Prediction
 =====================
 
