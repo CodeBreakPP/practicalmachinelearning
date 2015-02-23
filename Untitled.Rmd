@@ -3,20 +3,29 @@ title: "index"
 output: html_document
 author: "Dong. Xinyu"
 ---
+Introduction
+==================
 
+The following analysis is based on data from the 2013 Human Activity Recognition study by Wallace, Velloso and Fuks, "Qualitative Activity Recognition of Weight Lifting Exercises". In it, the researchers record accelometric data from six subjects performing repetitions of the Unilateral Dumbbell Biceps Curl exercise. Each set of repetitions was done in five different ways.
+
+Read Data
+====================
 First I read test and train data into environment.
-I choose numeric variables from all variables.
-Then I extract all the datas in these variabls from test and train datas.
-Then I use random forest model in this question.
 
-
-```{r,cache=TRUE}
-
+```{r,echo=TRUE,cache=TRUE}
 library(lattice)
 library(ggplot2)
 library(caret)
 pmltesting<-read.csv("pml-testing.csv",stringsAsFactors=FALSE)
 pmltraining<-read.csv("pml-training.csv",stringsAsFactors=FALSE)
+```
+
+Clean Datas
+==============
+I choose numeric variables from all variables.
+Then I extract all the datas in these variabls from test and train datas.
+
+```{r,cache=TRUE}
 filtering1<-c()
 j=1;
 for(i in 1:160){
@@ -28,9 +37,23 @@ for(i in 1:160){
 
 filteringTrain<-pmltraining[,filtering1]
 filteringTest<-pmltesting[,filtering1]
-
-modelFit<-train(as.factor(pmltraining$classe)~.,method="rf",data=filteringTrain,preProcess="pca")
-predict(modelFit,filteringTest)
 ```
 
+Build Model
+==================
+Then I use random forest model in this question.
+
+```{r,cache=TRUE}
+
+modelFit<-train(as.factor(pmltraining$classe)~.,method="rf",data=filteringTrain,preProcess="pca")
+```
+Final Prediction
+=====================
+
+```{r,cache=TRUE}
+
+predict(modelFit,filteringTest)
+
+
+```
 
