@@ -57,7 +57,45 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 
-<p>First I read test and train data into environment. I choose numeric variables from all variables. Then I extract all the datas in these variabls from test and train datas. Then I use random forest model in this question.</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The following analysis is based on data from the 2013 Human Activity Recognition study by Wallace, Velloso and Fuks, “Qualitative Activity Recognition of Weight Lifting Exercises”. In it, the researchers record accelometric data from six subjects performing repetitions of the Unilateral Dumbbell Biceps Curl exercise. Each set of repetitions was done in five different ways.</p>
+</div>
+<div id="read-data" class="section level1">
+<h1>Read Data</h1>
+<p>First I read test and train data into environment.</p>
+<pre class="r"><code>library(lattice)
+library(ggplot2)
+library(caret)
+pmltesting&lt;-read.csv(&quot;pml-testing.csv&quot;,stringsAsFactors=FALSE)
+pmltraining&lt;-read.csv(&quot;pml-training.csv&quot;,stringsAsFactors=FALSE)</code></pre>
+</div>
+<div id="clean-datas" class="section level1">
+<h1>Clean Datas</h1>
+<p>I choose numeric variables from all variables. Then I extract all the datas in these variabls from test and train datas.</p>
+<pre class="r"><code>filtering1&lt;-c()
+j=1;
+for(i in 1:160){
+        if(is.numeric(pmltesting[,i])){
+        filtering1[j]&lt;-i
+        j=j+1
+        }
+}
+
+filteringTrain&lt;-pmltraining[,filtering1]
+filteringTest&lt;-pmltesting[,filtering1]</code></pre>
+</div>
+<div id="build-model" class="section level1">
+<h1>Build Model</h1>
+<p>Then I use random forest model in this question.</p>
+</div>
+<div id="error-rate" class="section level1">
+<h1>Error Rate</h1>
+<p>This section discusses about the error rates of the chosen random forest model . It is expected that the out-of-sample error rate should be larger than the in-sample error rate.</p>
+</div>
+<div id="final-prediction" class="section level1">
+<h1>Final Prediction</h1>
+</div>
 
 
 </div>
